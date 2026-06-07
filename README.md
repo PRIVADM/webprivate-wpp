@@ -6,9 +6,9 @@
 
 **Navegador privado para Wallapop con sesiones independientes y anti-fingerprinting**
 
-[![Version](https://img.shields.io/badge/versión-2.0.0-7C5CFC?style=for-the-badge)](https://github.com/PRIV-ADM/webprivate-wpp/releases/latest)
-[![Android](https://img.shields.io/badge/Android-8.0%2B-3DDC84?style=for-the-badge&logo=android)](https://github.com/PRIV-ADM/webprivate-wpp/releases/latest)
-[![Chrome](https://img.shields.io/badge/Chrome-Extensión-4285F4?style=for-the-badge&logo=googlechrome)](https://github.com/PRIV-ADM/webprivate-wpp/tree/main/browser-extension)
+[![Version](https://img.shields.io/badge/versión-2.0.0-7C5CFC?style=for-the-badge)](https://github.com/PRIVADM/webprivate-wpp/releases/latest)
+[![Android](https://img.shields.io/badge/Android-8.0%2B-3DDC84?style=for-the-badge&logo=android)](https://github.com/PRIVADM/webprivate-wpp/releases/latest)
+[![Chrome](https://img.shields.io/badge/Chrome-Extensión-4285F4?style=for-the-badge&logo=googlechrome)](https://github.com/PRIVADM/webprivate-wpp/tree/main/browser-extension)
 [![Licencia](https://img.shields.io/badge/licencia-privada-red?style=for-the-badge)](#licencias)
 
 [⬇️ Descargar APK](#instalación) · [🧩 Extensión Chrome](#extensión-para-chrome) · [✨ Funciones](#funcionalidades) · [💳 Solicitar licencia](#licencias)
@@ -82,7 +82,7 @@ Compatible con **Chrome, Edge y cualquier navegador basado en Chromium**.
 #### Instalar la extensión
 
 **Opción A — Instalación manual (recomendada):**
-1. Descarga la carpeta [`browser-extension/`](https://github.com/PRIV-ADM/webprivate-wpp/tree/main/browser-extension) completa (botón "Download ZIP" del repo)
+1. Descarga la carpeta [`browser-extension/`](https://github.com/PRIVADM/webprivate-wpp/tree/main/browser-extension) completa (botón "Download ZIP" del repo)
 2. En Chrome → `chrome://extensions/` → activa **Modo desarrollador** (esquina superior derecha)
 3. Haz clic en **"Cargar descomprimida"** y selecciona la carpeta `browser-extension/`
 
@@ -112,7 +112,7 @@ Exportar sesión → JSON    ────────→  Importar sesión desde
 
 ### Pasos
 
-**1.** Descarga el APK desde la sección [**Releases**](https://github.com/PRIV-ADM/webprivate-wpp/releases/latest)
+**1.** Descarga el APK desde la sección [**Releases**](https://github.com/PRIVADM/webprivate-wpp/releases/latest)
 
 **2.** En tu Android: `Ajustes → Seguridad → Instalar apps desconocidas` → activa el permiso para tu gestor de archivos.
 

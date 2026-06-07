@@ -6,8 +6,8 @@
 
 **Navegador privado para Wallapop con sesiones independientes y anti-fingerprinting**
 
-[![Version](https://img.shields.io/badge/versión-2.0.0-7C5CFC?style=for-the-badge)](https://github.com/TU_USUARIO/webprivate-wpp/releases/latest)
-[![Android](https://img.shields.io/badge/Android-8.0%2B-3DDC84?style=for-the-badge&logo=android)](https://github.com/TU_USUARIO/webprivate-wpp/releases/latest)
+[![Version](https://img.shields.io/badge/versión-2.0.0-7C5CFC?style=for-the-badge)](https://github.com/Maestrokey/webprivate-wpp/releases/latest)
+[![Android](https://img.shields.io/badge/Android-8.0%2B-3DDC84?style=for-the-badge&logo=android)](https://github.com/Maestrokey/webprivate-wpp/releases/latest)
 [![Licencia](https://img.shields.io/badge/licencia-privada-red?style=for-the-badge)](#licencias)
 
 [⬇️ Descargar APK](#instalación) · [✨ Funciones](#funcionalidades) · [📖 Manual](#uso) · [💬 Soporte](#soporte)
@@ -83,7 +83,7 @@ Cada sesión genera automáticamente una identidad de dispositivo única e indep
 
 ### Pasos
 
-**1.** Descarga el APK desde la sección [**Releases**](https://github.com/TU_USUARIO/webprivate-wpp/releases/latest)
+**1.** Descarga el APK desde la sección [**Releases**](https://github.com/Maestrokey/webprivate-wpp/releases/latest)
 
 **2.** En tu Android, ve a:
 `Ajustes → Seguridad → Instalar apps desconocidas`

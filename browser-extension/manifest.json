@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "WebPrivate WPP — Session Manager",
+  "version": "1.6.0",
+  "description": "Exporta, inyecta y limpia sesiones Wallapop. Resetea identidad (thx_guid, tmx_guid). Compatible con la app Android WebPrivate WPP.",
+  "permissions": [
+    "cookies",
+    "browsingData",
+    "history",
+    "downloads",
+    "storage"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "WebPrivate WPP — Session Manager",
+    "default_icon": {
+      "128": "icon128.png"
+    }
+  },
+  "icons": {
+    "128": "icon128.png"
+  }
+}

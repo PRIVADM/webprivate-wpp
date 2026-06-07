@@ -6,11 +6,12 @@
 
 **Navegador privado para Wallapop con sesiones independientes y anti-fingerprinting**
 
-[![Version](https://img.shields.io/badge/versión-2.0.0-7C5CFC?style=for-the-badge)](https://github.com/Maestrokey/webprivate-wpp/releases/latest)
-[![Android](https://img.shields.io/badge/Android-8.0%2B-3DDC84?style=for-the-badge&logo=android)](https://github.com/Maestrokey/webprivate-wpp/releases/latest)
+[![Version](https://img.shields.io/badge/versión-2.0.0-7C5CFC?style=for-the-badge)](https://github.com/PRIV-ADM/webprivate-wpp/releases/latest)
+[![Android](https://img.shields.io/badge/Android-8.0%2B-3DDC84?style=for-the-badge&logo=android)](https://github.com/PRIV-ADM/webprivate-wpp/releases/latest)
+[![Chrome](https://img.shields.io/badge/Chrome-Extensión-4285F4?style=for-the-badge&logo=googlechrome)](https://github.com/PRIV-ADM/webprivate-wpp/tree/main/browser-extension)
 [![Licencia](https://img.shields.io/badge/licencia-privada-red?style=for-the-badge)](#licencias)
 
-[⬇️ Descargar APK](#instalación) · [✨ Funciones](#funcionalidades) · [📖 Manual](#uso) · [💬 Soporte](#soporte)
+[⬇️ Descargar APK](#instalación) · [🧩 Extensión Chrome](#extensión-para-chrome) · [✨ Funciones](#funcionalidades) · [💳 Solicitar licencia](#licencias)
 
 ---
 
@@ -18,22 +19,26 @@
 
 ## ¿Qué es WebPrivate WPP?
 
-**WebPrivate WPP** es una aplicación Android que actúa como navegador privado optimizado para Wallapop. Permite gestionar **múltiples cuentas simultáneamente** con aislamiento total entre sesiones: cada pestaña tiene sus propias cookies, identidad de dispositivo, y puede usar un proxy diferente.
+**WebPrivate WPP** es un ecosistema de herramientas para Wallapop compuesto por:
 
-> Desarrollada para usuarios que necesitan privacidad, aislamiento de sesiones y control total sobre su huella digital en Wallapop.
+- 📱 **App Android** — navegador privado con hasta 8 sesiones aisladas, anti-fingerprinting, proxy por sesión y sistema de licencias
+- 🧩 **Extensión Chrome** — gestión de cookies y sesiones desde el navegador de escritorio, compatible con la app
+
+> Diseñado para usuarios que necesitan privacidad total, aislamiento de sesiones y control de su huella digital en Wallapop.
 
 ---
 
 ## Funcionalidades
 
-### 🗂️ Sesiones independientes (hasta 8 pestañas)
+### 📱 App Android
+
+#### 🗂️ Sesiones independientes (hasta 8 pestañas)
 - Cada sesión tiene **cookies propias**, **historial separado** y **localStorage aislado**
 - Al cambiar de pestaña, la sesión anterior queda completamente congelada
 - Botón **`+`** para añadir nuevas sesiones · pulsación larga para gestionar cada una
 - Desliza horizontalmente para cambiar entre sesiones (swipe)
 
-### 🎭 Anti-fingerprinting por sesión
-Cada sesión genera automáticamente una identidad de dispositivo única e independiente:
+#### 🎭 Anti-fingerprinting por sesión
 
 | Parámetro | Descripción |
 |-----------|-------------|
@@ -46,36 +51,60 @@ Cada sesión genera automáticamente una identidad de dispositivo única e indep
 | **Screen & GPU** | Dimensiones y renderizador diferentes por sesión |
 | **Timezone** | Europe/Madrid (CET/CEST) |
 
-### 🌐 Proxy / VPN por sesión
-- Configuración **independiente por pestaña**: cada sesión puede tener su propio proxy
+#### 🌐 Proxy / VPN por sesión
+- Configuración **independiente por pestaña** — cada sesión puede usar su propio proxy
 - Soporta **HTTP, HTTPS y SOCKS5** con autenticación (usuario + contraseña)
 - Se aplica automáticamente al cambiar de pestaña
 - Indicador visual `🌐` en la pestaña cuando hay proxy activo
-- El tráfico de notificaciones en background también usa el proxy configurado
 
-### 🔐 Seguridad
+#### 🔐 Seguridad
 - **PIN de 4 dígitos** con SHA-256 + bloqueo tras 5 intentos fallidos
-- **Animación shake** en PIN incorrecto
 - Los datos de sesión nunca se envían a servidores externos
 
-### 📥 Gestión de sesiones
-- **Exportar** sesión activa a JSON
-- **Importar** sesión desde JSON (compatible con la extensión Chrome)
-- **Perfiles guardados** — guarda y restaura hasta 10 sesiones nombradas
-- **Reset selectivo** — borra solo la sesión activa, las demás intactas
-
-### 🔔 Notificaciones de mensajes
+#### 🔔 Notificaciones de mensajes
 - Polling automático cada 15 minutos en background (WorkManager)
 - Notificación cuando hay mensajes nuevos sin leer
-- No requiere mantener la app abierta
-
-### 📤 Descarga de archivos
-- Descarga automática al gestor de descargas de Android
-- Conserva las cookies de sesión para archivos autenticados
 
 ---
 
-## Instalación
+### 🧩 Extensión para Chrome
+
+Compatible con **Chrome, Edge y cualquier navegador basado en Chromium**.
+
+| Función | Descripción |
+|---------|-------------|
+| **Estado** | Ver todas las cookies activas de Wallapop con clasificación |
+| **Exportar** | Descarga la sesión completa en JSON (incluye cookies HttpOnly) |
+| **Inyectar** | Carga un JSON exportado y restaura la sesión |
+| **Limpiar** | Elimina trackers de terceros conservando tu sesión |
+| **Reset** | Borra toda la identidad Wallapop para crear cuenta nueva |
+
+#### Instalar la extensión
+
+**Opción A — Instalación manual (recomendada):**
+1. Descarga la carpeta [`browser-extension/`](https://github.com/PRIV-ADM/webprivate-wpp/tree/main/browser-extension) completa (botón "Download ZIP" del repo)
+2. En Chrome → `chrome://extensions/` → activa **Modo desarrollador** (esquina superior derecha)
+3. Haz clic en **"Cargar descomprimida"** y selecciona la carpeta `browser-extension/`
+
+**Opción B — Desde el código fuente:**
+```
+1. Abre chrome://extensions/
+2. Activa "Modo desarrollador"
+3. "Cargar descomprimida" → selecciona la carpeta browser-extension/
+```
+
+#### Compatibilidad entre app y extensión
+
+```
+PC (Chrome + extensión)              Móvil (App Android)
+─────────────────────               ─────────────────────
+Exportar sesión → JSON    ────────→  Importar sesión desde JSON
+                          ←────────  Exportar sesión → JSON
+```
+
+---
+
+## Instalación (App Android)
 
 ### Requisitos
 - Android **8.0 (Oreo)** o superior
@@ -83,15 +112,13 @@ Cada sesión genera automáticamente una identidad de dispositivo única e indep
 
 ### Pasos
 
-**1.** Descarga el APK desde la sección [**Releases**](https://github.com/Maestrokey/webprivate-wpp/releases/latest)
+**1.** Descarga el APK desde la sección [**Releases**](https://github.com/PRIV-ADM/webprivate-wpp/releases/latest)
 
-**2.** En tu Android, ve a:
-`Ajustes → Seguridad → Instalar apps desconocidas`
-y activa el permiso para tu gestor de archivos o navegador.
+**2.** En tu Android: `Ajustes → Seguridad → Instalar apps desconocidas` → activa el permiso para tu gestor de archivos.
 
-**3.** Abre el archivo `.apk` descargado y pulsa **Instalar**.
+**3.** Abre el archivo `.apk` y pulsa **Instalar**.
 
-**4.** Al abrir la app tendrás **3 días de prueba gratuita**. Para uso continuo necesitas un código de activación (ver [Licencias](#licencias)).
+**4.** Al abrir la app tendrás **3 días de prueba gratuita**. Para uso continuo necesitas un código de activación.
 
 ---
 
@@ -111,15 +138,8 @@ y activa el permiso para tu gestor de archivos o navegador.
 └─────────────────────────────────┘
 ```
 
-### Gestos
-| Gesto | Acción |
-|-------|--------|
-| Tap en pestaña | Cambiar a esa sesión |
-| Pulsación larga en pestaña | Opciones: renombrar · resetear · proxy · cerrar |
-| Deslizar izquierda/derecha | Cambiar sesión (swipe) |
-| Botón `+` | Añadir nueva sesión |
-
 ### Menú principal (botón 🔘)
+
 | Opción | Función |
 |--------|---------|
 | 📊 Estado de cookies | Ver cookies de la sesión activa |
@@ -132,15 +152,8 @@ y activa el permiso para tu gestor de archivos o navegador.
 | 👤 Perfiles | Guardar y restaurar sesiones nombradas |
 | 🌐 Proxy / VPN | Configurar proxy para la sesión activa |
 | 🔐 Seguridad PIN | Activar / cambiar bloqueo de app |
-
-### Configurar un proxy para una sesión
-
-1. Pulsación larga sobre la pestaña → **"Configurar proxy"**
-2. Activa el interruptor, selecciona **HTTP** o **SOCKS5**
-3. Introduce `host:puerto` y credenciales si las tiene
-4. Pulsa **Guardar** — la pestaña recargará por el proxy
-
-La pestaña mostrará el icono 🌐 cuando tiene proxy activo.
+| 💬 Soporte | WhatsApp · respuesta rápida |
+| 💳 Solicitar licencia | Obtener código de activación por WhatsApp |
 
 ---
 
@@ -163,40 +176,32 @@ WPP-XXXXXXXX-MMYY-CCCC
 4. La app muestra la fecha de caducidad y te deja acceder
 
 ### Renovar licencia caducada
-Al caducar una licencia, la app muestra la pantalla de renovación. Introduce un nuevo código y sigue usando la app sin perder tus sesiones guardadas.
+Al caducar, la app muestra la pantalla de renovación. Introduce un nuevo código y sigue usando la app sin perder tus sesiones guardadas.
 
----
+### ¿Cómo obtener una licencia?
 
-## Compatibilidad con la extensión Chrome
+[![WhatsApp](https://img.shields.io/badge/WhatsApp-Solicitar_licencia-25D366?style=for-the-badge&logo=whatsapp)](https://wa.me/56978327863?text=Hola%2C+quiero+solicitar+una+licencia+para+WebPrivate+WPP)
 
-WebPrivate WPP es compatible con la **extensión Chrome Wallapop Manager**:
-
-1. En Chrome (PC) con la extensión instalada → exporta tu sesión
-2. Transfiere el archivo `.json` al móvil
-3. En la app → Menú → ⬆️ Importar sesión
-4. Las cookies se inyectan en la sesión activa
+O desde la app → Menú 🔘 → **💳 Solicitar licencia**
 
 ---
 
 ## Preguntas frecuentes
 
 **¿Las sesiones se mezclan entre sí?**
-No. Cada pestaña tiene su propio almacén de cookies y localStorage. Al cambiar de pestaña, la anterior se guarda y la nueva se restaura de forma completamente aislada.
+No. Cada pestaña tiene su propio almacén de cookies y localStorage, completamente aislado.
 
 **¿Mis datos se guardan en algún servidor?**
-No. Todo se almacena localmente en el dispositivo. No hay telemetría ni comunicación con servidores externos propios.
+No. Todo se almacena localmente en el dispositivo. Sin telemetría ni servidores externos.
 
 **¿El proxy afecta a los datos guardados de la sesión?**
-No. El proxy solo cambia el routing de red. Las cookies y datos de sesión se mantienen intactos independientemente del proxy.
+No. El proxy solo cambia el routing de red. Las cookies y datos de sesión se mantienen intactos.
 
-**¿Puedo usar la app sin proxy?**
-Sí. El proxy es opcional. La app funciona con conexión directa normalmente.
+**¿Puedo usar la extensión sin la app?**
+Sí. La extensión Chrome funciona de forma independiente. La integración es opcional.
 
-**¿Cuántas sesiones puedo tener?**
-Hasta 8 sesiones simultáneas. Cada una completamente independiente.
-
-**¿La app funciona en segundo plano?**
-Sí. Las notificaciones de mensajes nuevos funcionan mediante WorkManager, que ejecuta el polling cada 15 minutos aunque la app esté cerrada.
+**¿Cuántas sesiones puedo tener en la app?**
+Hasta 8 sesiones simultáneas, cada una completamente independiente.
 
 ---
 
@@ -204,25 +209,19 @@ Sí. Las notificaciones de mensajes nuevos funcionan mediante WorkManager, que e
 
 | Versión | Cambios principales |
 |---------|-------------------|
-| **2.0.0** | Sistema de licencias con caducidad · Pestañas dinámicas (hasta 8) · Proxy independiente por sesión |
-| **1.9.0** | Proxy/VPN por pestaña · Botón "+" para añadir sesiones · Barra de tabs scrollable |
+| **2.0.0** | Botón "Solicitar licencia" · Sistema de licencias con caducidad · Extensión Chrome v1.6.0 |
+| **1.9.0** | Proxy/VPN por pestaña · Pestañas dinámicas (hasta 8) · Barra de tabs scrollable |
 | **1.8.0** | Proxy/VPN global integrado (HTTP, HTTPS, SOCKS5 con auth) |
-| **1.7.0** | WebRTC leak prevention · Battery/Connection spoofing · Swipe entre tabs · Descarga de archivos |
+| **1.7.0** | WebRTC leak prevention · Battery/Connection spoofing · Swipe entre tabs |
 | **1.6.0** | Anti-fingerprinting completo · 3 sesiones independientes · Notificaciones |
-
----
-
-## Soporte
-
-¿Tienes dudas o necesitas un código de activación?
-
-[![WhatsApp](https://img.shields.io/badge/WhatsApp-Soporte-25D366?style=for-the-badge&logo=whatsapp)](https://wa.me/56978327863?text=Hola%2C+necesito+soporte+para+WebPrivate+WPP)
 
 ---
 
 <div align="center">
 
 **WebPrivate WPP** · Software privado · Todos los derechos reservados
+
+[![WhatsApp](https://img.shields.io/badge/WhatsApp-Soporte-25D366?style=for-the-badge&logo=whatsapp)](https://wa.me/56978327863?text=Hola%2C+necesito+soporte+para+WebPrivate+WPP)
 
 *No se distribuye el código fuente. El APK está disponible exclusivamente para usuarios con licencia.*
 

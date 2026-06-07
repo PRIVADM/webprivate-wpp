@@ -1,0 +1,6 @@
+# Archivos personales no públicos
+CONTINUAR_EN_NUEVO_CHAT.md
+GITHUB_SETUP.md
+*.keystore
+*.jks
+.env

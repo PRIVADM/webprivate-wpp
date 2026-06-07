@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebPrivate WPP — Session Manager</title>
+  <style>
+    :root {
+      --bg:       #0f0f13;
+      --bg2:      #1a1a24;
+      --bg3:      #23232f;
+      --border:   #2e2e3e;
+      --accent:   #7c5cfc;
+      --accent2:  #5a3fd4;
+      --green:    #3ecf8e;
+      --red:      #f87171;
+      --yellow:   #fbbf24;
+      --text:     #e8e8f0;
+      --text2:    #8888aa;
+      --radius:   8px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 420px;
+      min-height: 300px;
+      background: var(--bg);
+      color: var(--text);
+      font: 13px/1.5 'Segoe UI', system-ui, sans-serif;
+      padding: 0 0 12px;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo {
+      width: 28px; height: 28px;
+      background: var(--accent);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; font-weight: 800; color: #fff;
+      flex-shrink: 0;
+    }
+    .header-title { font-size: 14px; font-weight: 700; }
+    .header-sub   { font-size: 10px; color: var(--text2); }
+    .version      { margin-left: auto; font-size: 10px; color: var(--text2); background: var(--bg3); padding: 2px 7px; border-radius: 10px; border: 1px solid var(--border); }
+
+    /* ── Tabs ── */
+    .tabs {
+      display: flex;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: 0 4px;
+    }
+    .tab {
+      flex: 1;
+      padding: 9px 4px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text2);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all .15s;
+      user-select: none;
+      min-height: 38px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .tab:hover  { color: var(--text); background: rgba(255,255,255,.03); }
+    .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    /* ── Panels ── */
+    .panel { display: none; padding: 14px 16px; }
+    .panel.active { display: block; }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px;
+      margin-bottom: 10px;
+    }
+    .card-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text2);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin-bottom: 8px;
+    }
+
+    /* ── Cookie list ── */
+    .cookie-list {
+      max-height: 200px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+    .cookie-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 11px;
+    }
+    .cookie-row:last-child { border-bottom: none; }
+    .cookie-name  { font-weight: 600; color: var(--text); min-width: 130px; }
+    .cookie-val   { color: var(--text2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+    .badge {
+      font-size: 9px; font-weight: 700; padding: 2px 5px;
+      border-radius: 4px; white-space: nowrap; flex-shrink: 0;
+    }
+    .badge-session   { background: rgba(124,92,252,.25); color: var(--accent); }
+    .badge-fp        { background: rgba(248,113,113,.2);  color: var(--red); }
+    .badge-httponly  { background: rgba(251,191,36,.15);  color: var(--yellow); }
+    .empty-state     { color: var(--text2); font-size: 12px; text-align: center; padding: 16px 0; }
+
+    /* ── Stats row ── */
+    .stats {
+      display: flex; gap: 8px; margin-bottom: 10px;
+    }
+    .stat {
+      flex: 1; background: var(--bg2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 8px 10px; text-align: center;
+    }
+    .stat-num  { font-size: 20px; font-weight: 800; color: var(--accent); }
+    .stat-lbl  { font-size: 10px; color: var(--text2); }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 10px 14px; border-radius: var(--radius); border: none;
+      font: 600 12px 'Segoe UI', sans-serif; cursor: pointer;
+      transition: all .15s; width: 100%; margin-top: 6px;
+      min-height: 40px; /* touch-friendly */
+    }
+    .btn:disabled { opacity: .4; cursor: not-allowed; }
+    .btn-primary  { background: var(--accent);  color: #fff; }
+    .btn-primary:hover:not(:disabled)  { background: var(--accent2); }
+    .btn-success  { background: rgba(62,207,142,.15); color: var(--green); border: 1px solid rgba(62,207,142,.3); }
+    .btn-success:hover:not(:disabled)  { background: rgba(62,207,142,.25); }
+    .btn-danger   { background: rgba(248,113,113,.15); color: var(--red); border: 1px solid rgba(248,113,113,.3); }
+    .btn-danger:hover:not(:disabled)   { background: rgba(248,113,113,.25); }
+    .btn-warn     { background: rgba(251,191,36,.12); color: var(--yellow); border: 1px solid rgba(251,191,36,.3); }
+    .btn-warn:hover:not(:disabled)     { background: rgba(251,191,36,.22); }
+    .btn-ghost    { background: transparent; color: var(--text2); border: 1px solid var(--border); }
+    .btn-ghost:hover:not(:disabled)    { color: var(--text); border-color: var(--text2); }
+    .btn-whatsapp { background: rgba(37,211,102,.15); color: #25D366; border: 1px solid rgba(37,211,102,.3); }
+    .btn-whatsapp:hover:not(:disabled) { background: rgba(37,211,102,.25); }
+    .btn-row { display: flex; gap: 8px; }
+    .btn-row .btn { flex: 1; }
+
+    /* ── File input ── */
+    .file-drop {
+      border: 2px dashed var(--border); border-radius: var(--radius);
+      padding: 20px; text-align: center; cursor: pointer;
+      transition: border-color .15s; margin-bottom: 8px;
+    }
+    .file-drop:hover, .file-drop.drag { border-color: var(--accent); }
+    .file-drop-icon { font-size: 24px; margin-bottom: 6px; }
+    .file-drop-text { font-size: 12px; color: var(--text2); }
+    .file-drop-name { font-size: 11px; color: var(--green); margin-top: 4px; font-weight: 600; }
+    #fileInput { display: none; }
+
+    /* ── Log output ── */
+    .log {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 8px 10px;
+      font: 11px/1.6 'Cascadia Code', 'Consolas', monospace;
+      max-height: 120px; overflow-y: auto; margin-top: 8px;
+      scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+    }
+    .log-line       { color: var(--text2); }
+    .log-ok         { color: var(--green); }
+    .log-warn       { color: var(--yellow); }
+    .log-err        { color: var(--red); }
+
+    /* ── Toast ── */
+    #toast {
+      position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%);
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 8px 16px;
+      font-size: 12px; pointer-events: none;
+      opacity: 0; transition: opacity .2s;
+      white-space: nowrap; z-index: 999;
+    }
+    #toast.show { opacity: 1; }
+
+    /* ── Profile selector ── */
+    select {
+      width: 100%; padding: 9px 10px;
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: var(--radius); color: var(--text);
+      font: 12px 'Segoe UI', sans-serif; cursor: pointer;
+      margin-bottom: 8px; min-height: 38px;
+    }
+    select:focus { outline: none; border-color: var(--accent); }
+
+    /* ── Warning / info boxes ── */
+    .warn-box {
+      background: rgba(248,113,113,.08); border: 1px solid rgba(248,113,113,.3);
+      border-radius: var(--radius); padding: 10px 12px;
+      font-size: 11px; color: var(--red); margin-bottom: 8px; line-height: 1.6;
+    }
+    .info-box {
+      background: rgba(124,92,252,.08); border: 1px solid rgba(124,92,252,.3);
+      border-radius: var(--radius); padding: 10px 12px;
+      font-size: 11px; color: #a78bfa; margin-bottom: 8px; line-height: 1.6;
+    }
+    .success-box {
+      background: rgba(62,207,142,.08); border: 1px solid rgba(62,207,142,.3);
+      border-radius: var(--radius); padding: 10px 12px;
+      font-size: 11px; color: var(--green); margin-bottom: 8px; line-height: 1.6;
+    }
+
+    /* ── Spinner ── */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spin { display: inline-block; animation: spin .7s linear infinite; }
+
+    /* ── Divider ── */
+    .divider { height: 1px; background: var(--border); margin: 8px 0; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">W</div>
+    <div>
+      <div class="header-title">WebPrivate WPP</div>
+      <div class="header-sub">Gestión de sesiones Wallapop</div>
+    </div>
+    <div class="version">v1.6.0</div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="status">Estado</div>
+    <div class="tab" data-tab="export">Exportar</div>
+    <div class="tab" data-tab="inject">Inyectar</div>
+    <div class="tab" data-tab="clean">Limpiar</div>
+    <div class="tab" data-tab="reset">Reset</div>
+  </div>
+
+  <!-- ── STATUS ── -->
+  <div class="panel active" id="panel-status">
+    <div class="stats">
+      <div class="stat"><div class="stat-num" id="stat-total">–</div><div class="stat-lbl">Cookies totales</div></div>
+      <div class="stat"><div class="stat-num" id="stat-session">–</div><div class="stat-lbl">De sesión</div></div>
+      <div class="stat"><div class="stat-num" id="stat-fp">–</div><div class="stat-lbl">Fingerprint</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Cookies de Wallapop</div>
+      <div class="cookie-list" id="cookie-list">
+        <div class="empty-state">Cargando…</div>
+      </div>
+    </div>
+    <button class="btn btn-ghost" id="btn-refresh">↻ Actualizar</button>
+    <div class="divider"></div>
+    <button class="btn btn-whatsapp" id="btn-license-status">💳 Solicitar licencia</button>
+  </div>
+
+  <!-- ── EXPORT ── -->
+  <div class="panel" id="panel-export">
+    <div class="info-box">
+      Exporta <strong>todas las cookies de Wallapop</strong> incluyendo HttpOnly
+      (thx_guid, tmx_guid) — compatibles con la app <strong>WebPrivate WPP</strong>.
+    </div>
+    <div class="card">
+      <div class="card-title">Vista previa de exportación</div>
+      <div class="cookie-list" id="export-preview">
+        <div class="empty-state">Haz clic en Exportar para previsualizar</div>
+      </div>
+    </div>
+    <button class="btn btn-success" id="btn-export">⬇ Exportar sesión a JSON</button>
+    <div class="log" id="export-log" style="display:none"></div>
+  </div>
+
+  <!-- ── INJECT ── -->
+  <div class="panel" id="panel-inject">
+    <div class="info-box">
+      Inyecta cookies exportadas desde la app <strong>WebPrivate WPP</strong> o desde esta extensión.
+      No requiere cerrar el navegador.
+    </div>
+    <div class="file-drop" id="file-drop">
+      <div class="file-drop-icon">📂</div>
+      <div class="file-drop-text">Arrastra el JSON aquí o haz clic para seleccionar</div>
+      <div class="file-drop-name" id="file-name"></div>
+    </div>
+    <input type="file" id="fileInput" accept=".json">
+    <button class="btn btn-primary" id="btn-inject" disabled>⚡ Inyectar cookies</button>
+    <div class="log" id="inject-log" style="display:none"></div>
+  </div>
+
+  <!-- ── CLEAN ── -->
+  <div class="panel" id="panel-clean">
+    <div class="info-box">
+      Elimina cookies de rastreadores de terceros (Google Ads, Criteo, DoubleClick…)
+      <strong>conservando tu sesión activa</strong> en Wallapop.
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="stat-num" id="stat-tracking">–</div><div class="stat-lbl">Trackers</div></div>
+      <div class="stat"><div class="stat-num" id="stat-keep">–</div><div class="stat-lbl">Se conservan</div></div>
+    </div>
+    <button class="btn btn-ghost" id="btn-scan">🔍 Escanear trackers</button>
+    <button class="btn btn-warn" id="btn-clean" disabled>🧹 Eliminar trackers</button>
+    <div class="log" id="clean-log" style="display:none"></div>
+  </div>
+
+  <!-- ── RESET ── -->
+  <div class="panel" id="panel-reset">
+    <div class="warn-box">
+      ⚠ <strong>Borrado completo de identidad Wallapop.</strong><br>
+      Elimina cookies, localStorage, IndexedDB, Service Worker cache e historial.
+      Permite crear una nueva cuenta sin ser detectado como usuario previo.<br>
+      <strong>La sesión actual se perderá.</strong>
+    </div>
+    <div class="card">
+      <div class="card-title">Qué se elimina</div>
+      <div style="font-size:11px; line-height:2; color:var(--text2)">
+        🔴 &nbsp;thx_guid / tmx_guid (fingerprint ThreatMetrix)<br>
+        🔴 &nbsp;device_id / trackingUserId<br>
+        🔴 &nbsp;localStorage de wallapop.com<br>
+        🔴 &nbsp;IndexedDB de wallapop.com<br>
+        🔴 &nbsp;Service Worker cache<br>
+        🔴 &nbsp;Historial de URLs de Wallapop<br>
+        🟢 &nbsp;Cookies de otros sitios → intactas
+      </div>
+    </div>
+    <button class="btn btn-danger" id="btn-reset">💣 Resetear identidad Wallapop</button>
+    <div class="log" id="reset-log" style="display:none"></div>
+  </div>
+
+  <div id="toast"></div>
+  <script src="popup.js"></script>
+</body>
+</html>
